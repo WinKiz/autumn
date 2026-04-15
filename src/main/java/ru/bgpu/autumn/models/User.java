@@ -57,7 +57,7 @@ public class User {
     }
 
     public UserDTO toDto() {
-        return new UserDTO(id, login, name);
+        return new UserDTO(id, name, login);
     }
 
     public List<Room> getRooms() {

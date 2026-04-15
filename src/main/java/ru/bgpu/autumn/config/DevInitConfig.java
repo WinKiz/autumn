@@ -3,6 +3,7 @@ package ru.bgpu.autumn.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.bgpu.autumn.models.Message;
 import ru.bgpu.autumn.models.Room;
@@ -20,6 +21,7 @@ public class DevInitConfig implements CommandLineRunner {
     @Autowired UserService userService;
     @Autowired MessageService messageService;
     @Autowired RoomService roomService;
+    @Autowired PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -28,7 +30,8 @@ public class DevInitConfig implements CommandLineRunner {
 
         Room room = roomService.save(new Room("Общая комината"));
         for(int i = 0; i < 10; i++) {
-            User user = new User("login-"+i,"test-"+i);
+            User user = new User("test-"+i,"login-"+i);
+            user.setPassword(passwordEncoder.encode("password"));
             user.getRooms().add(room);
             userService.save(user);
             for(int j = 0; j < 10; j++) {
