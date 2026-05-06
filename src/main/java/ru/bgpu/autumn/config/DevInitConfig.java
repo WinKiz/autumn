@@ -34,6 +34,8 @@ public class DevInitConfig implements CommandLineRunner {
         Random random = new Random();
 
         Group userGroup = groupService.getByName(Group.GROUP_USER).orElseThrow();
+        Group adminGroup = groupService.getByName(Group.GROUP_ADMIN).orElseThrow();
+        Group managerGroup = groupService.getByName(Group.GROUP_MANAGER).orElseThrow();
 
         Room room = roomService.save(new Room("Общая комината"));
         for(int i = 0; i < 10; i++) {
@@ -48,5 +50,16 @@ public class DevInitConfig implements CommandLineRunner {
                 }
             }
         }
+
+        User admin = new User("admin", "admin");
+        admin.setPassword(passwordEncoder.encode("admin"));
+        admin.getRooms().add(room);
+        admin.getGroups().add(adminGroup);
+        userService.save(admin);
+        User manager = new User("manager", "manager");
+        manager.setPassword(passwordEncoder.encode("manager"));
+        manager.getRooms().add(room);
+        manager.getGroups().add(managerGroup);
+        userService.save(manager);
     }
 }
