@@ -8,8 +8,12 @@ import java.util.List;
 @Table(name = "groups")
 public class Group {
 
+    public static final String GROUP_ADMIN = "ADMIN";
+    public static final String GROUP_USER = "USER";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @Column(nullable = false, unique = true)
